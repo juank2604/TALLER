@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="images/favicon.png" type="">
+
+  <title>Inicio de Sesion - Taller</title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!--owl slider stylesheet -->
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" /> -->
+
+  <!-- font awesome style -->
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+  <script>
+    $(document).ready(function() {
+      $('#form-login').submit(function(event) {
+            
+        event.preventDefault(); // Evitar el envío por defecto del formulario
+        var usuario = $('#usuario').val();
+        var contrasena = $('#contrasena').val();
+
+        //alert("usuario" + usuario);
+        //alert("contrasena" + contrasena);
+
+        if(usuario == "" || contrasena == "" ){
+          alert('Debe ingresar datos de inicio de sesion');
+        }else{
+
+          $.ajax({
+            url: 'php/validar_usuario.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {usuario: usuario, contrasena: contrasena},
+                
+            success: function(response) {
+              if (response.success) {
+                window.location.href = 'menu.html'; // Redirigir a la página de dashboard si el login es exitoso
+              } else {
+                $('#mensaje').html('<p>' + response.message + '</p>'); // Mostrar mensaje de error si falla el login
+              }
+            
+            },error: function(xhr, status, error) {
+              console.error('Error en la solicitud AJAX:', status, error);
+            }
+          });
+        }  
+
+      });
+    });
+
+    function registrarse() {
+      window.location.replace("registro.php");
+    }
+
+  </script>
+</head>
+
+<body>
+
+  <div class="hero_area">
+
+    <div class="hero_bg_box">
+      <div class="bg_img_box">
+        <img src="images/hero-bg.png" alt="">
+      </div>
+    </div>
+
+    <!-- slider section -->
+    <section class="slider_section ">
+      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          
+          <div class="container ">
+              
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="detail-box">
+                    
+                  <form id="form-login"> <!-- action="php/validar_usuario.php" method="post" -->
+
+                    <table class="tabla" >
+                        
+                      <tr>
+                        <td align="center"> <br>             
+                          <h2 class="color_titulo">Iniciar Sesion</h2>         
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td align="center"> <br>             
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Usuario</span>
+                            </div>
+                            <input type="text" class="form-control" id="usuario" name="usuario">
+                          </div>             
+                        </td>
+                      </tr>
+            
+                      <tr>
+                        <td align="center"> <br>             
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Contraseña</span>
+                            </div>
+                            <input type="password" class="form-control" id="contrasena" name="contrasena">
+                          </div>             
+                        </td>
+                      </tr>
+            
+                    </table>
+            
+                    <div class="btn-box" >
+                      <input type="submit" class="button_slide slide_down" value="Iniciar Sesión">
+
+                      <input type="button" class="button_slide slide_down" onclick="registrarse()" value="Registrarse">
+                    </div>
+            
+                  </form>
+
+                  <br>
+
+                  <div class="col-md-6 ">
+                    <a href="restablecer.html">Restablecer Contraseña</a>
+                  </div>
+
+                  <br>
+
+                  <div id="mensaje"></div>
+                                    
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="img-box">
+                  <img src="images/slider-img.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>        
+        </div>  
+      </div>
+
+    </section>
+    <!-- end slider section -->
+  </div>
+
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+ 
+</body>
+</html>
